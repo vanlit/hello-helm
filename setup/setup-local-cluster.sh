@@ -1,0 +1,50 @@
+# --------------------------------------------------
+# Docker
+# --------------------------------------------------
+
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Installing Docker..."
+
+    curl -fsSL https://get.docker.com | sudo sh
+
+    sudo systemctl enable docker
+    sudo systemctl start docker
+
+    sudo usermod -aG docker "$USER"
+
+    echo
+    echo "NOTE: Re-login may be required for docker group membership."
+fi
+
+# --------------------------------------------------
+# k3d
+# --------------------------------------------------
+
+if ! command -v k3d >/dev/null 2>&1; then
+    echo "Installing k3d..."
+
+    curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+fi
+
+# --------------------------------------------------
+# Local Kubernetes Cluster
+# --------------------------------------------------
+
+CLUSTER_NAME="hello-world"
+
+if ! k3d cluster list | awk '{print $1}' | grep -qx "${CLUSTER_NAME}"; then
+    echo "Creating k3d cluster: ${CLUSTER_NAME}"
+
+    k3d cluster create "${CLUSTER_NAME}" \
+        --agents 1 \
+        --servers 1 \
+        --wait
+fi
+
+# --------------------------------------------------
+# Verify cluster
+# --------------------------------------------------
+
+kubectl cluster-info
+
+kubectl get nodes
