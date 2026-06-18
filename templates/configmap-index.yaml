@@ -1,0 +1,7 @@
+   apiVersion: v1
+   data:
+     index.html: {{ .Values.message }}
+   kind: ConfigMap
+   metadata:
+     name: {{ .Values.name }}-configmap
+   EOF

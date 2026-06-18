@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ default .Release.Namespace .Values.namespace }}
+spec:
+  selector:
+      matchLabels:
+      app: {{ .Values.name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+      - name: {{ .Values.image.repository }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/
+          name: index
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: {{ .Values.name }}-configmap
+          name: index
+EOFCode language: JavaScript (javascript)
