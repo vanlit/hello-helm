@@ -1,8 +1,7 @@
-  name: "hello-world"
-  namespace: ""
-  replicaCount: 1
-  image:
-    repository: nginx
-    tag: "1.14.2"
-  message: "hello world!"
-  EOFCode language: JavaScript (javascript)
+name: "hello-world"
+namespace: ""
+replicaCount: 1
+image:
+  repository: nginx
+  tag: "1.14.2"
+message: "hello world!"
