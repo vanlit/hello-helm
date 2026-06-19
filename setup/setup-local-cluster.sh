@@ -17,6 +17,20 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 # --------------------------------------------------
+# Kubernetes kernel prerequisites
+# --------------------------------------------------
+
+if ! lsmod | grep -q '^br_netfilter'; then
+    echo "Loading br_netfilter..."
+    sudo modprobe br_netfilter
+fi
+
+if ! lsmod | grep -q '^overlay'; then
+    echo "Loading overlay..."
+    sudo modprobe overlay
+fi
+
+# --------------------------------------------------
 # k3d
 # --------------------------------------------------
 
