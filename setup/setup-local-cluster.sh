@@ -14,6 +14,7 @@ if ! command -v docker >/dev/null 2>&1; then
 
     echo
     echo "NOTE: Re-login may be required for docker group membership."
+    exit
 fi
 
 # --------------------------------------------------
@@ -62,3 +63,8 @@ fi
 kubectl cluster-info
 
 kubectl get nodes
+
+echo "Wait for the nodes to signal 'ready'"
+
+kubectl wait --for=condition=Ready node --all --timeout=120s
+kubectl get pods -A
