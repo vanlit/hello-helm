@@ -53,6 +53,7 @@ if ! k3d cluster list | awk '{print $1}' | grep -qx "${CLUSTER_NAME}"; then
     k3d cluster create "${CLUSTER_NAME}" \
         --agents 1 \
         --servers 1 \
+        -p "8080:80@loadbalancer" \
         --wait
 fi
 
