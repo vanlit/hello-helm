@@ -1,0 +1,1 @@
+Deploying simple services via helm onto k3d-created kubernetes cluster, all locally on an ubuntu server
