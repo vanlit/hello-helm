@@ -14,6 +14,7 @@ if ! command -v docker >/dev/null 2>&1; then
 
     echo
     echo "NOTE: Re-login may be required for docker group membership."
+    echo "Please re-run the script after a relogin or otherwise ensuring docker group applied"
     exit
 fi
 
